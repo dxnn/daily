@@ -15,6 +15,9 @@
   .hidden {
     display: none;
   }
+  p {
+    margin: 0px;
+  }
 </style>
 </head><body>
 
@@ -29,7 +32,10 @@
 </form>
 
 
-<div id="clock" class="center hidden"></div>
+<div id="output" class="center hidden">
+  <p id="clock"></p>
+  <p id="whatdoing"></p>
+</div>
 
 
 <script>
@@ -41,7 +47,9 @@
   howlong = el('howlong')
   askwhat = el('askwhat')
   whatdo = el('whatdo')
+  output = el('output')
   clock = el('clock')
+  whatdoing = el('whatdoing')
   
   ~function() {
     var props = {}
@@ -64,7 +72,8 @@
   }()
   
   start_clock = function(props) {
-    clock.classList.remove('hidden')
+    output.classList.remove('hidden')
+    whatdoing.innerHTML = 'Crafting ' + props.what
     run_clock(props)
     var current = JSON.parse(localStorage.getItem('dailytiming') || "[]")
     current.push({ time: props.time
