@@ -74,7 +74,7 @@
   start_clock = function(props) {
     output.classList.remove('hidden')
     whatdoing.innerHTML = 'Crafting ' + props.what
-    run_clock(props)
+    run_clock(props, 0)
     var current = JSON.parse(localStorage.getItem('dailytiming') || "[]")
     current.push({ time: props.time
                  , what: props.what
@@ -83,10 +83,10 @@
     localStorage.setItem('dailytiming', JSON.stringify(current))
   }
   
-  run_clock = function(props) {
-    clock.innerHTML = props.time--
-    if(props.time > 0)
-      return setTimeout(function() {run_clock(props)}, 1000)
+  run_clock = function(props, count) {
+    clock.innerHTML = props.time - count
+    if(props.time > count)
+      return setTimeout(function() {run_clock(props, count + 1)}, 1000)
     
     alert("Time's up for " + props.what + "!!")
     // TODO: add chrome notification
