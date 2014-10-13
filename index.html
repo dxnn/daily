@@ -53,10 +53,12 @@
   
   ~function() {
     var props = {}
+    howlong.focus()
   
     asktime.addEventListener('submit', function(e) {
       askwhat.classList.remove('hidden')
       asktime.classList.add('hidden')
+      whatdo.focus()
       props.time = howlong.value
       e.preventDefault()
       return false
@@ -89,7 +91,8 @@
       return setTimeout(function() {run_clock(props, count + 1)}, 1000)
     
     alert("Time's up for " + props.what + "!!")
-    // TODO: add chrome notification
+    // TODO: add notification
+    // TODO: check successfulness
   }
   
 </script>
