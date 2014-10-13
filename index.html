@@ -1,0 +1,82 @@
+<!doctype html><html><head><meta charset="utf-8" />
+<style>
+  body {
+    font-size: 5em;
+  }
+  input {
+    font-size: 0.5em;
+  }
+  #clock {
+    font-size: 3em;
+  }
+  .center {
+    left:50%; top:50%; transform:translate(-50%,-50%); position:absolute;
+  }
+  .hidden {
+    display: none;
+  }
+</style>
+</head><body>
+
+<form id="asktime" class="center">
+  <label for="howlong">How much time will you donate to the machine?</label>
+  <input type="text" name="howlong" value="" id="howlong">  
+</form>
+
+<form id="askwhat" class="center hidden">
+  <label for="whatdo">What great thing will you craft?</label>
+  <input type="text" name="whatdo" value="" id="whatdo">  
+</form>
+
+
+<div id="clock" class="center hidden"></div>
+
+
+<script>
+  //// a tiny little computer time clock that counts down over the course of the day
+  
+  el = document.getElementById.bind(document)
+  
+  asktime = el('asktime')
+  howlong = el('howlong')
+  askwhat = el('askwhat')
+  whatdo = el('whatdo')
+  clock = el('clock')
+  
+  ~function() {
+    var props = {}
+  
+    asktime.addEventListener('submit', function(e) {
+      askwhat.classList.remove('hidden')
+      asktime.classList.add('hidden')
+      props.time = howlong.value
+      e.preventDefault()
+      return false
+    })
+  
+    askwhat.addEventListener('submit', function(e) {
+      askwhat.classList.add('hidden')
+      props.what = whatdo.value
+      start_clock(props)
+      e.preventDefault()
+      return false
+    })
+  }()
+  
+  start_clock = function(props) {
+    clock.classList.remove('hidden')
+    run_clock(props)
+    // TODO: store props in local storage
+  }
+  
+  run_clock = function(props) {
+    clock.innerHTML = props.time--
+    if(props.time > 0)
+      return setTimeout(function() {run_clock(props)}, 1000)
+    
+    alert("Time's up for " + props.what + "!!")
+    // TODO: add chrome notification
+  }
+  
+</script>
+</body></html>
